@@ -3,11 +3,13 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const expect = require('chai').expect;
 const cors = require('cors');
+const multer = require('multer');
 
 const fccTestingRoutes = require('./routes/fcctesting.js');
 const apiRoutes = require('./routes/api.js');
 const runner = require('./test-runner');
 
+const upload = multer();
 const app = express();
 
 app.use('/public', express.static(process.cwd() + '/public'));
@@ -15,6 +17,7 @@ app.use(cors({ origin: '*' })); //For FCC testing purposes only
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(upload.none());
 
 //Index page (static HTML)
 app.route('/')
